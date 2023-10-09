@@ -17,27 +17,36 @@ import sequelize from './db/index.js';
 // eslint-disable-next-line
 import data from './lib/data.js';
 
+// Generate a secret token for webhook security
 const secret = process.env.NODE_ENV === 'development' ? '12345' : randomBytes(32).toString('hex');
 
+// Create a Koa application and a router
 const app = new Koa();
 const router = new Router();
 
+// Retrieve the Telegram Bot token from environment variables
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new Bot(token);
 
+// Initialize internationalization
 const i18n = new I18n({
   defaultLocale: 'en',
   directory: 'locales',
 });
 bot.use(i18n);
 
+// Serve the web app's HTML file for any route started with /app/
 router.get('/app/(.*)', async (ctx) => {
   await send(ctx, './dist/index.html');
 });
+
+// Configure the bot's webhook handler
 router.post('/bot/', webhookCallback(bot, 'koa', { secretToken: secret }));
 
+// Authentication middleware
 async function auth(ctx, next) {
   if (process.env.NODE_ENV === 'development') {
+    // In development mode, set a mock user for testing
     ctx.user = {
       id: 12345,
       language_code: 'ru',
@@ -48,24 +57,28 @@ async function auth(ctx, next) {
     const initData = new URLSearchParams(ctx.header['tgwebappdata']);
     if (validateWebAppData(token, initData)) {
       if (initData.has('user')) {
+        // If valid web app data includes a user, set it as the user context
         ctx.user = JSON.parse(initData.get('user'));
         return next();
       }
     }
   }
+  // If authentication fails, return a 401 Unauthorized response
   return ctx.throw(401);
 }
 
+// Create an API router
 const api = Router({
   prefix: '/api/',
 });
 
-// api error handling
+// Error handling middleware for the API
 api.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
+      // Handle Sequelize validation errors with a 400 Bad Request response
       console.error(err);
       ctx.status = 400;
       ctx.body = {
@@ -73,6 +86,7 @@ api.use(async (ctx, next) => {
         message: err.errors.map(item => item.message).join(', '),
       };
     } else {
+      // Handle other errors with a 500 Internal Server Error response
       console.error(err.stack || err.toString());
       ctx.status = err.status || 500;
       ctx.body = {
@@ -83,6 +97,7 @@ api.use(async (ctx, next) => {
   }
 });
 
+// Define an API route to fetch alerts
 api.get('alerts', auth, async (ctx) => {
   const alerts = await sequelize.models.Alert.findAll({
     where: { user: ctx.user.id },
@@ -95,6 +110,7 @@ api.get('alerts', auth, async (ctx) => {
   };
 });
 
+// Define an API route to create alert
 api.post('alerts', auth, async (ctx) => {
   const alert = await sequelize.models.Alert.create({
     ...ctx.request.body,
@@ -107,6 +123,7 @@ api.post('alerts', auth, async (ctx) => {
     data: alert,
   };
   if (process.env.NODE_ENV !== 'development') {
+    // In production mode, send a notification to the user via the bot
     try {
       const locale = i18n.locales.includes(ctx.user.language_code) ? ctx.user.language_code : 'en';
       const msg = [
@@ -123,6 +140,7 @@ api.post('alerts', auth, async (ctx) => {
   }
 });
 
+// Define an API route to delete alert
 api.delete('alerts/:id', auth, async (ctx) => {
   const affected = await sequelize.models.Alert.destroy({
     where: {
@@ -144,18 +162,24 @@ api.delete('alerts/:id', auth, async (ctx) => {
   }
 });
 
+// Middlewares for logging and parsing request bodies
 app.use(logger());
 app.use(bodyParser({
   enableTypes: ['json'],
 }));
+
+// Serve static assets for the web app
 app.use(mount('/app/assets/', serve('./dist/assets/')));
-// Web
+
+// Web routes
 app.use(router.routes());
 app.use(router.allowedMethods());
-// Api
+
+// API routes
 app.use(api.routes());
 app.use(api.allowedMethods());
 
+// Bot command to start the interaction
 bot.command('start', async (ctx) => {
   await ctx.reply(ctx.t('welcome'), {
     reply_markup: {
@@ -178,20 +202,24 @@ bot.command('start', async (ctx) => {
   });
 });
 
+// Bot command to provide help information
 bot.command('help', async (ctx) => {
   await ctx.reply(ctx.t('description'));
 });
 
+// Handle incoming messages in development mode (echo back)
 if (process.env.NODE_ENV === 'development') {
   bot.on('message:text', (ctx) => {
     ctx.reply(`Echo: ${ctx.message.text}`);
   });
 }
 
+// Set up the bot's webhook
 await bot.api.setWebhook(`https://${process.env.DOMAIN}/bot/`, {
   secret_token: secret,
 });
 
+// Configure the bot's name, short description, and description for multiple locales
 for (const locale of i18n.locales) {
   await bot.api.setMyName(i18n.t(locale, 'name'), {
     language_code: locale,
@@ -204,6 +232,7 @@ for (const locale of i18n.locales) {
   });
 }
 
+// Start the Koa server
 const server = app.listen(process.env.PORT || 3000, process.env.HOST || '0.0.0.0', () => {
   const { address, port } = server.address();
   console.log(`Alerts server launched on '${address}:${port}'`);
