@@ -1,0 +1,23 @@
+{
+  "From": "From",
+  "To": "To",
+  "Trip": "Trip",
+  "Currency": "Currency",
+  "Delete": "Delete",
+  "No alerts": "You don't have any alerts",
+  "Create alert": "Create alert",
+  "Return": "Return",
+  "One-way": "One-way",
+  "Trip for {0} days": "Trip for {0} day | Trip for {0} days",
+  "Trip from {0} to {1} days": "Trip from {0} to {1} days",
+  "Duration {0} days": "Duration {0} day | Duration {0} days",
+  "Duration from {0} to {1} days": "Duration from {0} to {1} days",
+  "Delete alert?": "Delete alert?",
+  "Type": "Type",
+  "Anywhere": "Anywhere",
+  "Departure city or country": "Departure city or country",
+  "Destination city or country": "Destination city or country",
+  "Next": "Next",
+  "Select currency": "Select currency",
+  "Trip duration": "Trip duration"
+}

@@ -1,0 +1,4 @@
+body {
+  background-color: #eff2f5;
+  background-color: var(--tg-theme-secondary-bg-color, #eff2f5);
+}

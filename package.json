@@ -1,0 +1,140 @@
+{
+  "name": "tg-alert",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server.js",
+    "lint": "eslint --ext .js,.vue src",
+    "nodemon": "nodemon --watch server.js --watch lib server.js",
+    "i18n:extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/*.json' --add --remove --noEmptyTranslation='en' --separator *"
+  },
+  "dependencies": {
+    "@grammyjs/i18n": "^1.0.1",
+    "@grammyjs/validator": "^1.0.1",
+    "@koa/bodyparser": "^5.0.0",
+    "@koa/router": "^12.0.0",
+    "grammy": "^1.19.0",
+    "koa": "^2.14.2",
+    "koa-logger": "^3.2.1",
+    "koa-mount": "^4.0.0",
+    "koa-send": "^5.0.1",
+    "koa-static": "^5.0.0",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^1.4.0",
+    "@twa-dev/sdk": "^6.9.0",
+    "@vant/touch-emulator": "^1.4.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.50.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-vue": "^9.17.0",
+    "flexsearch": "^0.7.31",
+    "ky": "^1.0.1",
+    "nodemon": "^3.0.1",
+    "pinia": "^2.1.6",
+    "vant": "^4.7.1",
+    "vite": "^4.4.5",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.5.0",
+    "vue-i18n-extract": "^2.0.7",
+    "vue-router": "^4.2.5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "ignorePatterns": [
+      "/dist"
+    ],
+    "env": {
+      "browser": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": "latest"
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:import/recommended",
+      "plugin:vue/vue3-recommended"
+    ],
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "never"
+        }
+      ],
+      "sort-imports": [
+        "error",
+        {
+          "ignoreCase": false,
+          "ignoreDeclarationSort": false,
+          "ignoreMemberSort": false,
+          "memberSyntaxSortOrder": [
+            "none",
+            "all",
+            "single",
+            "multiple"
+          ],
+          "allowSeparatedGroups": true
+        }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always",
+        {
+          "objectsInObjects": false
+        }
+      ],
+      "space-before-blocks": [
+        "error",
+        "always"
+      ],
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          "ignorePackages": true
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "./server.js",
+          "./lib/*",
+          "./db/*"
+        ],
+        "env": {
+          "node": true
+        }
+      }
+    ]
+  }
+}
