@@ -1,3 +1,4 @@
+name = AviaTips Alerts
 about =
   The bot helps you track flight ticket prices ✈️
 description =

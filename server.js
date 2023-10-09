@@ -192,6 +192,18 @@ await bot.api.setWebhook(`https://${process.env.DOMAIN}/bot/`, {
   secret_token: secret,
 });
 
+for (const locale of i18n.locales) {
+  await bot.api.setMyName(i18n.t(locale, 'name'), {
+    language_code: locale,
+  });
+  await bot.api.setMyShortDescription(i18n.t(locale, 'about'), {
+    language_code: locale,
+  });
+  await bot.api.setMyDescription(i18n.t(locale, 'description'), {
+    language_code: locale,
+  });
+}
+
 const server = app.listen(process.env.PORT || 3000, process.env.HOST || '0.0.0.0', () => {
   const { address, port } = server.address();
   console.log(`Alerts server launched on '${address}:${port}'`);
