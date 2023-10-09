@@ -1,0 +1,10 @@
+node_modules
+docker-compose*
+.editorconfig
+
+src
+support
+public
+
+vite.config.js
+index.html

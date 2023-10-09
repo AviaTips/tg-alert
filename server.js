@@ -173,9 +173,11 @@ bot.command('help', async (ctx) => {
   await ctx.reply(ctx.t('description'));
 });
 
-bot.on('message:text', (ctx) => {
-  ctx.reply(`Echo: ${ctx.message.text}`);
-});
+if (process.env.NODE_ENV === 'development') {
+  bot.on('message:text', (ctx) => {
+    ctx.reply(`Echo: ${ctx.message.text}`);
+  });
+}
 
 await bot.api.setWebhook(`https://${process.env.DOMAIN}/bot/`, {
   secret_token: secret,
