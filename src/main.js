@@ -28,6 +28,7 @@ const router = createRouter({
     component: AlertsList,
   }, {
     path: '/create/origin',
+    alias: '/create',
     component: CreateAlertOrigin,
   }, {
     path: '/create/destination',

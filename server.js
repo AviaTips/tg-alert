@@ -157,7 +157,16 @@ app.use(api.routes());
 app.use(api.allowedMethods());
 
 bot.command('start', async (ctx) => {
-  await ctx.reply(ctx.t('welcome'));
+  await ctx.reply(ctx.t('welcome'), {
+    reply_markup: {
+      inline_keyboard: [[{
+        text: ctx.t('create-alert'),
+        web_app: {
+          url: `https://${process.env.DOMAIN}/app/create/`,
+        },
+      }]],
+    },
+  });
   await ctx.setChatMenuButton({
     menu_button: {
       type: 'web_app',
