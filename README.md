@@ -4,6 +4,8 @@ Telegram Mini App **AviaTips Alerts** helps you track flight ticket prices âœˆï¸
 
 Launch the app: [@AviaTipsBot](https://t.me/AviaTipsBot)
 
+**Why use a Mini App?** It offers more convenience for selecting departure and destination, adjusting the day slider, and configuring other parameters within the web application. On the other hand, receiving notifications is simpler and more user-friendly within the main Telegram interface via the bot.
+
 ## Quick Start
 
 ```bash
@@ -63,6 +65,24 @@ To build the production application:
 ```bash
 npm run build
 ```
+
+## Todo
+
+- [x] Launch Telegram Mini App template
+- [x] Launch from Menu Button
+- [x] Launch from Inline Button
+- [x] Routing
+- [x] Color theme support
+- [x] MainButton support
+- [x] BackButton support
+- [x] Fast local text search by 3000+ items
+- [x] Search and Select view
+- [x] Form view
+- [x] i18n in web app
+- [x] i18n in bot
+- [ ] Price slider
+- [ ] Calendar view
+- [ ] More languages support
 
 ## License
 
