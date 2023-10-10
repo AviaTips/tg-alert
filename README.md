@@ -95,7 +95,7 @@ npm run build
 - [x] Form view
 - [x] i18n in web app
 - [x] i18n in bot
-- [ ] Price slider
+- [x] Price slider
 - [ ] Calendar view
 - [ ] More languages support
 
