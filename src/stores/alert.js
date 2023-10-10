@@ -9,8 +9,9 @@ function defaultAlert() {
     origin: null,
     destination: null,
     type: 'oneway',
-    currency: i18n.global.locale.value === 'ru' ? 'RUB' : 'USD',
     range: [5, 14],
+    currency: i18n.global.locale.value === 'ru' ? 'RUB' : 'USD',
+    price: i18n.global.locale.value === 'ru' ? 12000 : 120,
   };
 }
 
@@ -22,6 +23,7 @@ export const useAlertStore = defineStore('alert', () => {
       origin: alert.origin,
       destination: alert.destination,
       currency: alert.currency,
+      price: alert.price,
       type: alert.type,
       timezone: timezone(),
     };

@@ -19,5 +19,7 @@
   "Destination city or country": "Destination city or country",
   "Next": "Next",
   "Select currency": "Select currency",
-  "Trip duration": "Trip duration"
+  "Trip duration": "Trip duration",
+  "Price up to": "Price up to",
+  "Threshold price": "Threshold price"
 }

@@ -19,5 +19,7 @@
   "Destination city or country": "Город или страна назначения",
   "Next": "Далее",
   "Select currency": "Выберете валюту",
-  "Trip duration": "Продолжительность поездки"
+  "Trip duration": "Продолжительность поездки",
+  "Price up to": "Цена до",
+  "Threshold price": "Максимальная цена"
 }

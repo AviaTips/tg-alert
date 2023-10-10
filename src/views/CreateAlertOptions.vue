@@ -14,8 +14,9 @@ import {
   showLoadingToast,
   showSuccessToast,
 } from 'vant';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
+import AdjustedSlider from '../components/AdjustedSlider.vue';
 import AlertSteps from '../components/AlertSteps.vue';
 import BackButton from '../components/BackButton.vue';
 import MainButton from '../components/MainButton.vue';
@@ -75,6 +76,14 @@ const showCurrencyPicker = computed({
   },
 });
 
+watch(() => alertStore.alert.currency, (newCode, oldCode) => {
+  if (newCode !== oldCode) {
+    const newCurrency = currencies.find((item) => item.code === newCode);
+    const oldCurrency = currencies.find((item) => item.code === oldCode);
+    alertStore.alert.price = Math.floor(alertStore.alert.price / oldCurrency.step * newCurrency.step);
+  }
+});
+
 async function save() {
   loading.value = true;
   showLoadingToast({ forbidClick: true });
@@ -96,30 +105,6 @@ async function save() {
   <AlertSteps :active="3" />
   <Form>
     <CellGroup>
-      <Field
-        :model-value="currency.name[locale]"
-        is-link
-        readonly
-        name="currency"
-        :label="$t('Currency')"
-        :placeholder="$t('Select currency')"
-        @click="showCurrencyPicker = true"
-      />
-      <Popup
-        v-model:show="showCurrencyPicker"
-        position="bottom"
-        :style="{height: '100%'}"
-      >
-        <Picker
-          :model-value="[alertStore.alert.currency]"
-          :columns="columns"
-          @confirm="onConfirm"
-          @change="onConfirm"
-          @click-option="onClickOption"
-          @cancel="showCurrencyPicker = false"
-        />
-      </Popup>
-
       <RadioGroup
         v-model="alertStore.alert.type"
         :class="$style.group"
@@ -154,6 +139,45 @@ async function save() {
             :max="90"
             :step="1"
             range
+          />
+        </template>
+      </Field>
+
+      <Field
+        :model-value="currency.name[locale]"
+        is-link
+        readonly
+        name="currency"
+        :label="$t('Currency')"
+        :placeholder="$t('Select currency')"
+        @click="showCurrencyPicker = true"
+      />
+      <Popup
+        v-model:show="showCurrencyPicker"
+        position="bottom"
+        :style="{height: '100%'}"
+      >
+        <Picker
+          :model-value="[alertStore.alert.currency]"
+          :columns="columns"
+          @confirm="onConfirm"
+          @change="onConfirm"
+          @click-option="onClickOption"
+          @cancel="showCurrencyPicker = false"
+        />
+      </Popup>
+
+      <Cell
+        :title="$t('Threshold price')"
+        :label="`${$t('Price up to')} ${$n(alertStore.alert.price, 'currency', { currency: alertStore.alert.currency})}`"
+      />
+      <Field
+        name="price"
+      >
+        <template #input>
+          <AdjustedSlider
+            v-model="alertStore.alert.price"
+            :currency="alertStore.alert.currency"
           />
         </template>
       </Field>

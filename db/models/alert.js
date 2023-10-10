@@ -51,6 +51,15 @@ export default function(sequelize) {
         len: 3,
       },
     },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 3200,
+      validate: {
+        min: 0,
+        max: 100_000_000,
+      },
+    },
     timezone: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -37,6 +37,21 @@ function customRule(choice, choicesLength) {
   return choicesLength < 4 ? 2 : 3;
 }
 
+const numberFormats = {
+  'en': {
+    currency: {
+      style: 'currency',
+      currency: 'USD',
+    },
+  },
+  'ru': {
+    currency: {
+      style: 'currency',
+      currency: 'RUB',
+    },
+  },
+};
+
 const i18n = createI18n({
   legacy: false,
   locale,
@@ -52,6 +67,7 @@ const i18n = createI18n({
   pluralRules: {
     ru: customRule,
   },
+  numberFormats,
 });
 
 //const vantMessages = (await import(`../node_modules/vant/es/locale/lang/${locale === 'ru' ? 'ru-RU' : 'en-US'}.mjs`));

@@ -75,6 +75,10 @@ function remove(alert) {
           :title="$t('Currency')"
           :value="currency(alert)"
         />
+        <Cell
+          :title="$t('Price up to')"
+          :value="$n(alert.price, 'currency', { currency: alert.currency })"
+        />
       </CellGroup>
       <template #right>
         <Button
