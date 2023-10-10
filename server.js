@@ -220,16 +220,20 @@ await bot.api.setWebhook(`https://${process.env.DOMAIN}/bot/`, {
 });
 
 // Configure the bot's name, short description, and description for multiple locales
-for (const locale of i18n.locales) {
-  await bot.api.setMyName(i18n.t(locale, 'name'), {
-    language_code: locale,
-  });
-  await bot.api.setMyShortDescription(i18n.t(locale, 'about'), {
-    language_code: locale,
-  });
-  await bot.api.setMyDescription(i18n.t(locale, 'description'), {
-    language_code: locale,
-  });
+try {
+  for (const locale of i18n.locales) {
+    await bot.api.setMyName(i18n.t(locale, 'name'), {
+      language_code: locale,
+    });
+    await bot.api.setMyShortDescription(i18n.t(locale, 'about'), {
+      language_code: locale,
+    });
+    await bot.api.setMyDescription(i18n.t(locale, 'description'), {
+      language_code: locale,
+    });
+  }
+} catch (err) {
+  console.error(err);
 }
 
 // Start the Koa server
