@@ -7,6 +7,7 @@ services:
     environment:
       TELEGRAM_TOKEN:
       DOMAIN:
+      NODE_ENV: ${NODE_ENV:-production}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-12345}
       POSTGRES_USER: ${POSTGRES_USER:-pguser}
       POSTGRES_DB: ${POSTGRES_DB:-alerts}
@@ -29,6 +30,7 @@ services:
     restart: always
     ports:
       - 5432:5432
+    # uncomment for data persistence
     #volumes:
     #  - /data/postgres:/var/lib/postgresql/data
     logging:

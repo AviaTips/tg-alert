@@ -25,6 +25,8 @@ docker compose up
 npx localtunnel --port 3000 --subdomain mydomain
 ```
 
+`DOMAIN` and `TELEGRAM_TOKEN` environment variables are mandatory for launching the application. You can use any tool instead of `localtunnel` to make your local app public.
+
 ## Features
 
 Key features of the Mini App:
@@ -39,11 +41,22 @@ Key features of the Mini App:
 
 The web app is implemented using the [Vue](https://vuejs.org/) framework and built with [Vite](https://vitejs.dev/).
 
+To launch API and database:
+
+```bash
+NODE_ENV=development
+docker compose up
+```
+
+Setting `NODE_ENV` to `development` disables telegram signature check for local development.
+
 To launch the development server:
 
 ```bash
 npm run dev
 ```
+
+Vite setup to proxy API requests to API server. For local development, mocks of `MainButton`, `BackButton`, and `WebApp.showConfirm` are used.
 
 File structure:
 
@@ -57,6 +70,8 @@ File structure:
     /main.js - Application routing logic
 /server.js - Static server, API server, and Bot-related code
 ```
+
+The application uses a PostgreSQL database, and if needed, you can connect to it using any explorer on the standard port 5432.
 
 ## Build
 
