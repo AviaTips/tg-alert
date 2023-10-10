@@ -99,6 +99,16 @@ npm run build
 - [ ] Calendar view
 - [ ] More languages support
 
+## 🤖 Telegram Mini App Contest
+
+* https://t.me/contest/327
+* https://t.me/contest/328
+* https://t.me/contest/332
+
+Mini App: https://t.me/AviaTipsBot
+
+**AviaTips Alerts** – a Mini App that helps you track flight ticket prices ✈️ Add an alert for your desired destination, and the bot will text you ticket prices. Be the first to know about cheap flight tickets and snag the lowest prices 🔥
+
 ## License
 
 MIT
